@@ -2,25 +2,24 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ReservationRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
-class Reservation
+#[ApiResource]
+class Reservationold
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    /**
-     * @var Collection<int, Guest>
-     */
-    #[ORM\OneToMany(targetEntity: Guest::class, mappedBy: 'reservation', cascade: ['persist', 'remove'], orphanRemoval: true)]//todo test with and without cascade...
-    private Collection $guests;
+    #[ORM\OneToMany(targetEntity: Guest::class, mappedBy: 'reservation', cascade: ['persist', 'remove'], orphanRemoval: true)]
+    protected Collection $guests;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $checkinDate = null;
@@ -38,32 +37,14 @@ class Reservation
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, Guest>
-     */
     public function getGuests(): Collection
     {
         return $this->guests;
     }
 
-    public function addGuest(Guest $guest): static
+    public function setGuests(array $guests): static
     {
-        if (!$this->guests->contains($guest)) {
-            $this->guests->add($guest);
-            $guest->setReservation($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGuest(Guest $guest): static
-    {
-        if ($this->guests->removeElement($guest)) {
-            // set the owning side to null (unless already changed)
-            if ($guest->getReservation() === $this) {
-                $guest->setReservation(null);
-            }
-        }
+        $this->guests = $guests;
 
         return $this;
     }

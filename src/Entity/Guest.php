@@ -25,8 +25,8 @@ class Guest
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $birthday = null;
 
-    #[ORM\Column(type: Types::ARRAY)]
-    private array $gender = [];
+    #[ORM\Column(length: 25)]
+    private ?string $gender = null;
 
     #[ORM\Column(length: 255)]
     private ?string $passportNumber = null;
@@ -34,8 +34,10 @@ class Guest
     #[ORM\Column]
     private ?int $userId = null;
 
-    #[ORM\Column]
-    private ?int $registrationId = null;
+    #[ORM\ManyToOne(targetEntity:"Reservation", inversedBy: 'guests')]
+    #[ORM\JoinColumn(name:"reservation_id", referencedColumnName:"id")]
+    private ?Reservation $reservation = null;
+
 
     public function getId(): ?int
     {
@@ -78,12 +80,12 @@ class Guest
         return $this;
     }
 
-    public function getGender(): array
+    public function getGender(): ?string
     {
         return $this->gender;
     }
 
-    public function setGender(array $gender): static
+    public function setGender(string $gender): static
     {
         $this->gender = $gender;
 
@@ -114,15 +116,16 @@ class Guest
         return $this;
     }
 
-    public function getRegistrationId(): ?int
+    public function getReservation(): ?Reservation
     {
-        return $this->registrationId;
+        return $this->reservation;
     }
 
-    public function setRegistrationId(int $registrationId): static
+    public function setReservation(?Reservation $reservation): static
     {
-        $this->registrationId = $registrationId;
+        $this->reservation = $reservation;
 
         return $this;
     }
+
 }
