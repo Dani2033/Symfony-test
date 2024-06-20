@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Reservation;
 
 use App\Entity\Reservation;
-use App\Entity\Guest;
 use App\Form\ReservationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,28 +15,31 @@ class ReservationController extends AbstractController
     #[Route('/reservation/form', name: 'reservation_form')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $guestList = [];
-        $guestList = new Guest();
+        // Check if user is authenticated
+        if (!$this->getUser()) {
+            $this->addFlash('warning', 'You need to be logged in to access the reservation form.');
+            return $this->redirectToRoute('app_register');
+        }
+
         $reservation = new Reservation();
-        // ...
 
         $form = $this->createForm(ReservationType::class, $reservation);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            // $form->getData() holds the submitted values
-            // but, the original `$task` variable has also been updated
-            $task = $form->getData();
 
-            // ... perform some action, such as saving the task to the database
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reservation = $form->getData();
+
             $entityManager->persist($reservation);
             $entityManager->flush();
 
+            // Redirect to the same route to clear the form (PRG pattern)
+            $this->addFlash('success', 'Reservation added succesfully');
             return $this->redirectToRoute('reservation_form');
         }
 
         return $this->render('reservation/form.html.twig', [
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 }

@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\GuestRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: GuestRepository::class)]
 #[ApiResource]
@@ -17,25 +18,34 @@ class Guest
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $surname = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    /**
+     * @Assert\Type("\DateTimeInterface")
+     */
     private ?\DateTimeInterface $birthday = null;
 
-    #[ORM\Column(type: Types::ARRAY)]
-    private array $gender = [];
+    #[ORM\Column(length: 25)]
+    #[Assert\NotBlank]
+    private ?string $gender = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $passportNumber = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
     private ?int $userId = null;
 
-    #[ORM\Column]
-    private ?int $registrationId = null;
+    #[ORM\ManyToOne(targetEntity:"Reservation", inversedBy: 'guests')]
+    #[ORM\JoinColumn(name:"reservation_id", referencedColumnName:"id")]
+    private ?Reservation $reservation = null;
 
     public function getId(): ?int
     {
@@ -78,12 +88,12 @@ class Guest
         return $this;
     }
 
-    public function getGender(): array
+    public function getGender(): ?string
     {
         return $this->gender;
     }
 
-    public function setGender(array $gender): static
+    public function setGender(string $gender): static
     {
         $this->gender = $gender;
 
@@ -114,15 +124,16 @@ class Guest
         return $this;
     }
 
-    public function getRegistrationId(): ?int
+    public function getReservation(): ?Reservation
     {
-        return $this->registrationId;
+        return $this->reservation;
     }
 
-    public function setRegistrationId(int $registrationId): static
+    public function setReservation(?Reservation $reservation): static
     {
-        $this->registrationId = $registrationId;
+        $this->reservation = $reservation;
 
         return $this;
     }
+
 }

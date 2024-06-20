@@ -1,16 +1,7 @@
-{# templates/footer.html.twig #}
-<footer>
-    <div class="footer-content">
-        <p>&copy; {{ "now"|date("Y") }} Your Company Name. All rights reserved.</p>
-        <nav>
-            <ul>
-                {# <li><a href="{{ path('home') }}">Home</a></li>
-                <li><a href="{{ path('about') }}">About Us</a></li>
-                <li><a href="{{ path('contact') }}">Contact</a></li> #}
-                <li><a href="">Home</a></li>
-                <li><a href="">About Us</a></li>
-                <li><a href="">Contact</a></li>
-            </ul>
-        </nav>
+<footer class="bg-body-tertiary text-center text-lg-start footer fixed-bottom">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+        © 2024 Copyright:
+        <a class="text-body" href="https://github.com/Dani2033/Symfony-test">Symfony Test</a>
+        <a href="{{ path('landing_page') }}" class="btn btn-primary btn-lg">Back to landing page</a>
     </div>
 </footer>
