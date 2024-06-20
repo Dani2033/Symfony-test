@@ -7,8 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Metadata\ApiResource;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
+#[ApiResource]
 class Reservation
 {
     #[ORM\Id]
@@ -19,7 +22,7 @@ class Reservation
     /**
      * @var Collection<int, Guest>
      */
-    #[ORM\OneToMany(targetEntity: Guest::class, mappedBy: 'reservation', cascade: ['persist', 'remove'], orphanRemoval: true)]//todo test with and without cascade...
+    #[ORM\OneToMany(targetEntity: Guest::class, mappedBy: 'reservation', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $guests;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]

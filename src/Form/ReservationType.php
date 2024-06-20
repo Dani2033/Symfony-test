@@ -23,11 +23,15 @@ class ReservationType extends AbstractType
             ])
             ->add('checkinDate', null, [
                 'widget' => 'single_text',
+                'attr' => ['class' => 'form-control']
             ])
             ->add('checkoutDate', null, [
                 'widget' => 'single_text',
+                'attr' => ['class' => 'form-control']
             ])
-            ->add('save', SubmitType::class)
+            ->add('save', SubmitType::class, [
+                'attr' => ['class' => 'btn btn-primary']
+            ])
         ;
     }
 

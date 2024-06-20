@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container text-center mt-5">
+        <h1>Welcome to Symfony-test</h1>
+        <p class="lead">Choose an option below to get started</p>
+        <div class="d-flex justify-content-center gap-3 mt-4">
+            <a href="{{ path('app_login') }}" class="btn btn-primary btn-lg">Login</a>
+            <a href="{{ path('reservation_form') }}" class="btn btn-success btn-lg">Create Reservation</a>
+            <a href="/api" class="btn btn-success btn-lg">Api</a>
+            <a href="{{ path('app_register') }}" class="btn btn-primary btn-lg">Register</a>
+        </div>
+    </div>
+
+
+{% endblock %}

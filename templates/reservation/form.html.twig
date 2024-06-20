@@ -8,16 +8,12 @@
         {{ form_row(form.checkoutDate) }}
 
         <h3>Guests</h3>
-        {# <ul class="guests">
-            {% for guest in form.guests %}
-                <li>{{ form_row(guest.name) }}</li>
-            {% endfor %}
-        </ul> #}
+    
         <ul class="guests"
             data-index="{{ form.guests|length > 0 ? form.guests|last.vars.name + 1 : 0 }}"
             data-prototype="{{ form_widget(form.guests.vars.prototype)|e('html_attr') }}"
         ></ul>
-        <button type="button" class="add_item_link" data-collection-holder-class="guests">Add a guest</button>
+        <button type="button" class="add_item_link btn btn-secondary" data-collection-holder-class="guests">Add a guest</button>
     {{ form_end(form) }}
 
     <script>
