@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Guest List</h1>
+        <table class="table table-striped mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Birthday</th>
+                    <th>Gender</th>
+                    <th>Passport Number</th>
+                    <th>User ID</th>
+                    <th>Reservation</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for guest in guests %}
+                    <tr>
+                        <td>{{ guest.id }}</td>
+                        <td>{{ guest.name }}</td>
+                        <td>{{ guest.surname }}</td>
+                        <td>{{ guest.birthday ? guest.birthday|date('Y-m-d') : 'N/A' }}</td>
+                        <td>{{ guest.gender }}</td>
+                        <td>{{ guest.passportNumber }}</td>
+                        <td>{{ guest.userId }}</td>
+                        <td>{{ guest.reservation ? guest.reservation.id : 'N/A' }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8" class="text-center">No data available</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

@@ -26,9 +26,15 @@ class Reservation
     private Collection $guests;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    /**
+     * @Assert\Type("\DateTimeInterface")
+     */
     private ?\DateTimeInterface $checkinDate = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    /**
+     * @Assert\Type("\DateTimeInterface")
+     */
     private ?\DateTimeInterface $checkoutDate = null;
 
     public function __construct()

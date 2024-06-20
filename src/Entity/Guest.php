@@ -26,7 +26,9 @@ class Guest
     private ?string $surname = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    #[Assert\Date]
+    /**
+     * @Assert\Type("\DateTimeInterface")
+     */
     private ?\DateTimeInterface $birthday = null;
 
     #[ORM\Column(length: 25)]

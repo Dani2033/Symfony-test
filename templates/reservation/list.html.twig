@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container mt-5">
+        <h1>Reservation List</h1>
+        <table class="table table-striped mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Check-in Date</th>
+                    <th>Check-out Date</th>
+                    <th>Guests</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reservation in reservations %}
+                    <tr>
+                        <td>{{ reservation.id }}</td>
+                        <td>{{ reservation.checkinDate ? reservation.checkinDate|date('Y-m-d') : 'N/A' }}</td>
+                        <td>{{ reservation.checkoutDate ? reservation.checkoutDate|date('Y-m-d') : 'N/A' }}</td>
+                        <td>
+                            <ul>
+                                {% for guest in reservation.guests %}
+                                    <li>{{ guest.name }} {{ guest.surname }}</li>
+                                {% else %}
+                                    <li>No guests</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">No reservations found</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
