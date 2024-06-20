@@ -1,1 +1,37 @@
-{{ form(form) }}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>New Reservation</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.checkinDate) }}
+        {{ form_row(form.checkoutDate) }}
+
+        <h2>Guests</h2>
+        <ul>
+            {% for guest in form.guests %}
+                <li>
+                    {{ form_row(guest.name) }}
+                    {{ form_row(guest.surname) }}
+                    {{ form_row(guest.birthday) }}
+                    {{ form_row(guest.gender) }}
+                    {{ form_row(guest.passportNumber) }}
+                    {{ form_row(guest.userId) }}
+                    {{ form_row(guest.registrationId) }}
+                    {{ form_row(guest._delete) }}
+                </li>
+            {% endfor %}
+        </ul>
+
+        <button type="button" id="add-guest-btn">Add Guest</button>
+
+        {{ form_row(form.submit) }}
+    {{ form_end(form) }}
+
+    <script>
+        const addGuestBtn = document.getElementById('add-guest-btn');
+        addGuestBtn.addEventListener('click', () => {
+            // Add JavaScript logic to dynamically add a new guest form field.
+        });
+    </script>
+{% endblock %}

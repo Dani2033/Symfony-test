@@ -2,41 +2,39 @@
 
 namespace App\Controller;
 
-use App\Entity\Reservation;
 use App\Entity\Guest;
-use App\Form\ReservationType;
+use App\Form\GuestType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 
-class ReservationController extends AbstractController
+class GuestController extends AbstractController
 {
-    #[Route('/reservation/form', name: 'reservation_form')]
+    #[Route('/guest/form', name: 'guest_form')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $guestList = [];
-        $guestList = new Guest();
-        $reservation = new Reservation();
+    
+        $guest = new Guest();
         // ...
 
-        $form = $this->createForm(ReservationType::class, $reservation);
+        $form = $this->createForm(GuestType::class, $guest);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // $form->getData() holds the submitted values
             // but, the original `$task` variable has also been updated
-            $reservation = $form->getData();
+            $guest = $form->getData();
 
             // ... perform some action, such as saving the task to the database
-            $entityManager->persist($reservation);
+            $entityManager->persist($guest);
             $entityManager->flush();
 
-            return $this->redirectToRoute('reservation_form');
+            return $this->redirectToRoute('guest_form');
         }
 
-        return $this->render('reservation/form.html.twig', [
+        return $this->render('guest/form.html.twig', [
             'form' => $form,
         ]);
     }
